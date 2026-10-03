@@ -1,5 +1,5 @@
 # digital-pcr
-Dig-PCR project (CB2330) by Aditi Shinkhede and Marleen Roomet (MSc Molecular Biotechnology and Bioinformatics, KTH)
+**Dig-PCR project (CB2330) by Aditi Shinkhede and Marleen Roomet (MSc Molecular Biotechnology and Bioinformatics, KTH)**
 
 This project develops a small stochastic model inspired by Vogelstein and Kinzler's 1999 paper "Digital PCR". The paper describes a method for detecting rare mutant DNA by distributing DNA into many wells, amplifying the DNA and comparing fluorescence signals from two probes.
 
