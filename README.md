@@ -5,7 +5,7 @@ This project develops a small stochastic model inspired by Vogelstein and Kinzle
 
 The goal of this project is not to reproduce the experiment exactly, but to build a simplified model that captures some of the important sources of randomness in digital PCR.
 
-The model was used to simulate 384 well experiments. Because DNA molecules are randomly distributed between wells, repeated experiments with the same parameters do not produce exactly the same number of mutant positive wells.
+The model was used to simulate a 384 well experiments. Because DNA molecules are randomly distributed between wells, repeated experiments with the same parameters do not produce exactly the same results.
 We additionally ran many virtual experiments to investigate this variation. 
 
 The simulation is contained in project.ipynb. The notebook is designed to run from top to bottom.
