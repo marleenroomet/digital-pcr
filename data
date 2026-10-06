@@ -22,6 +22,8 @@ n_wells = 384 (int) - experimental PCR plate setup from stool sample experiment 
 
 seed=42 (int) - computational choice - the seed is set to 42 so that the random simulation can be reproduced exactly
 
+pcr_signal = np.clip(pcr_signal, 0, None) (int) - model assumption - it prevents simulated signal from being below zero
+
 ratio_mean = 1.0 + 2.4 * mutant_share (float) - model assumption from RED/GREEN ratio observations - the paper provides reference ratio values for wild-type, mixed, and mutant populations - the simulation approximates the relationship between mutant fraction and RED/GREEN ratio using a linear model: the intercept 1.0 represents the approximate wild-type ratio, the slope 2.4 was chosen so that a mixed population gives a ratio close to the observed value in the paper (2.1 provided by the stool sample experiment) and the model also aims to produce a pure-mutant ratio close to the approximately 3.4 value used as the biological reference
 
 red_green_ratio = np.clip(red_green_ratio, 0.1, None) (float) - model assumption - it prevents simulated RED/GREEN ratios from becoming zero or negative after noise is added.
