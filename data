@@ -1,7 +1,35 @@
-Approximately 3.9% mutant mutant alleles. Expected value between 1-10%.
+lambda_template = 0.45 (float) - stool sample experiment for context (model calibration) - not directly reported by the paper, but lambda is chosen so that the expected fraction of wells containing DNA is close to the observed fraction of PCR positive stool wells (102/288 ≈ 35%), as a value of lambda = 0.45 is approximately 36% using the exponential distribution function formula F(t) = 1 − e−λt
 
-PCR positive fluorescence of approximately 47,000 ± 18,000 SFU
+mutant_fraction = 0.05 (float) - stool sample experiment for context (model assumption) - not directly reported by the paper, value of 0.05 was chosen to represent approximately 5% mutant molecules and to be the midpoint of the assumed range (1-10%) of the mutant product observed in the experimental example
 
-PCR negative fluorescence of approximately 2,600 ± 1,500 SFU
+positive_signal_mean = 47000 (float) -  stool sample experiment DNA PCR fluorescence results - it represents the reported mean signal for PCR positive wells in the stool experiment
 
-These values are described in the paper's stool experiment.
+positive_signal_sd = 18000 (float) -  stool sample experiment DNA PCR fluorescence results - it represents the reported standard deviation of the signal for PCR positive wells
+
+negative_signal_mean = 2600 (float) -  stool sample experiment DNA PCR fluorescence results- it represents the reported mean signal for PCR negative wells
+
+negative_signal_sd = 1500 (float) - stool sample experiment DNA PCR fluorescence results - it represents the reported standard deviation of the signal for PCR negative wells
+
+pcr_threshold = 10000 (float) - digital PCR on DNA from tumor cells - a numerical threshold is required by the simulation to classify generated wells as PCR positive or PCR negative: “...‘‘positive’’ wells yielding values in excess of 10,000 SFU…”
+
+ratio_noise = 0.20 (float) - assumption inferred from the general allele-specific fluorescence variability in the paper -  the simulation needs random variability in the RED/GREEN ratio to avoid generating identical ratios for wells with the same mutant fraction
+
+ratio_mixed_threshold = 1.5 (float) - paper-informed threshold (RED-GREEN ratio analysis) - the paper describes a mixed RED/GREEN ratio as follows: “DNA from cells containing one mutant c-Ki-Ras allele per every two WT c-Ki-Ras alleles yielded a RED/GREEN ratio of 1.5”
+
+ratio_mutant_threshold = 3.0 (float) - paper-informed threshold (RED-GREEN ratio analysis) - the paper describes strongly elevated RED/GREEN ratios for mutant containing wells: “...data suggested that wells containing only mutant alleles (no WT) would yield ratios in excess of 3.0”
+
+n_wells = 384 (int) - experimental PCR plate setup from stool sample experiment - represents the total number of wells used in the experimental setup being reproduced by the simulation
+
+seed=42 (int) - computational choice - the seed is set to 42 so that the random simulation can be reproduced exactly
+
+ratio_mean = 1.0 + 2.4 * mutant_share (float) - model assumption from RED/GREEN ratio observations - the paper provides reference ratio values for wild-type, mixed, and mutant populations - the simulation approximates the relationship between mutant fraction and RED/GREEN ratio using a linear model: the intercept 1.0 represents the approximate wild-type ratio, the slope 2.4 was chosen so that a mixed population gives a ratio close to the observed value in the paper (2.1 provided by the stool sample experiment) and the model also aims to produce a pure-mutant ratio close to the approximately 3.4 value used as the biological reference
+
+red_green_ratio = np.clip(red_green_ratio, 0.1, None) (float) - model assumption - it prevents simulated RED/GREEN ratios from becoming zero or negative after noise is added.
+
+n_experiments = 2000 (int) - assumption for computational modelling - specifies the number of Monte Carlo simulations used to estimate the behavior of the model
+
+prob_atleast_5 (float) - derived value from the stool sample analysis in the paper - represents the simulated probability of observing at least 5 mutant positive wells and is calculated from the simulated distribution rather than taken directly from the paper
+
+lower_95 (float) - represents the lower bound of the 95% interval calculated from the simulation results 
+
+upper_95 (float) - represents the upper bound of the 95% interval calculated from the simulation results
